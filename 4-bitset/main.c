@@ -73,18 +73,18 @@ int main(int argc, char *argv[]){
     make_bitmap(5); 
 */
     char bit_density = 1;
-	int data_size = atoi(argv[1]); //輸入參數 決定你 bitmap[]變數要產生 1000 或10000 筆資料
+    int data_size = atoi(argv[1]); //輸入參數 決定你 bitmap[]變數要產生 1000 或10000 筆資料
     printf("size =%d\r\n",data_size);
     if(data_size==0){
         printf("without enter data size\r\n");
 
     }
-    //FILE *txt;
-	//txt = fopen("bitmap_test_output","w");
-	//if(!txt){
-	//	printf("open failure");
-	//	return 1;
-	//}
+    FILE *txt;
+	txt = fopen("bitmap_test_output","w");
+	if(!txt){
+		printf("open failure");
+		return 1;
+	}
 
     //uint64_t bitmap[data_size]={0};
     //uint32_t out[data_size * 64]={0};
@@ -105,12 +105,12 @@ int main(int argc, char *argv[]){
                      (t1.tv_sec * 1e9 + t1.tv_nsec);
         total_imp += (unsigned long long) (t3.tv_sec * 1e9 + t3.tv_nsec) -
                      (t2.tv_sec * 1e9 + t2.tv_nsec);
-        //fprintf("bit_density=%u,%llu,%llu\n", (const char *)bit_density, total_nai, total_imp);  
-        printf("bit_density=%d,%llu,%llu\n", bit_density, total_nai, total_imp);         
+        fprintf(txt,"bit_density=%u,%llu,%llu\n", bit_density, total_nai, total_imp);  
+        //printf("bit_density=%d,%llu,%llu\n", bit_density, total_nai, total_imp);         
     }
     free(bitmap);
     free(out);
-    //fclose(txt);
+    fclose(txt);
     return 0;
 
 }
