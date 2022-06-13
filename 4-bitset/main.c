@@ -70,18 +70,19 @@ uint64_t make_bitmap(int set_bit_num){
 int main(int argc, char *argv[]){
     char bit_density = 1;
 	int data_size = atoi(argv[1]); //輸入參數 決定你 bitmap[]變數要產生 1000 或10000 筆資料
-    printf("size =%d\r\n",data_size);
+    //printf("size =%d\r\n",data_size);
     if(data_size==0){
         printf("without enter data size\r\n");
 
     }
-    FILE *txt;
-	txt = fopen("bitmap_test_output","w");
-	if(!txt){
+    //FILE *txt;
+	//txt = fopen("bitmap_test_output","w");
+	/*
+    if(!txt){
 		printf("open failure");
 		return 1;
 	}
-
+    */
     uint64_t *bitmap= calloc(data_size, sizeof(uint64_t));
     uint32_t *out= calloc(data_size * 64, sizeof(uint64_t));
     unsigned long long time_naive = 0, time_improved = 0;
@@ -100,12 +101,12 @@ int main(int argc, char *argv[]){
         time_improved += (unsigned long long) (t3.tv_sec * 1000000000 + t3.tv_nsec) -
                      (t2.tv_sec * 1000000000 + t2.tv_nsec);//轉成 nanosecond
         //fprintf(txt,"bit_density=%u,%llu,%llu\n", bit_density, time_naive, time_improved);
-        fprintf(txt,"%u,%llu,%llu\n", bit_density, time_naive, time_improved);  
-        //printf("bit_density=%d,%llu,%llu\n", bit_density, time_naive, time_improved);         
+        //fprintf(txt,"%u,%llu,%llu\n", bit_density, time_naive, time_improved);  
+        printf("%d,%llu,%llu\n", bit_density, time_naive, time_improved);         
     }
     free(bitmap);
     free(out);
-    fclose(txt);
+    //fclose(txt);
     return 0;
 
 }
