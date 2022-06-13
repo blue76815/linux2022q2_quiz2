@@ -34,6 +34,7 @@ size_t improved(uint64_t *bitmap, size_t bitmapsize, uint32_t *out)
     return pos;
 }
 
+
 void swap(uint64_t *a, uint64_t *b)
 {
     uint64_t tmp = *a;
@@ -67,13 +68,8 @@ uint64_t make_bitmap(int set_bit_num){
 
 
 int main(int argc, char *argv[]){
-/*     
-    make_bitmap(1);
-    make_bitmap(5);
-    make_bitmap(5); 
-*/
     char bit_density = 1;
-    int data_size = atoi(argv[1]); //輸入參數 決定你 bitmap[]變數要產生 1000 或10000 筆資料
+	int data_size = atoi(argv[1]); //輸入參數 決定你 bitmap[]變數要產生 1000 或10000 筆資料
     printf("size =%d\r\n",data_size);
     if(data_size==0){
         printf("without enter data size\r\n");
@@ -86,11 +82,9 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-    //uint64_t bitmap[data_size]={0};
-    //uint32_t out[data_size * 64]={0};
     uint64_t *bitmap= calloc(data_size, sizeof(uint64_t));
     uint32_t *out= calloc(data_size * 64, sizeof(uint64_t));
-    unsigned long long total_nai = 0, total_imp = 0;
+    unsigned long long time_naive = 0, time_improved = 0;
     for(bit_density=1;bit_density<=64;bit_density++){//點的稀疏程度從1～64點
         for(int i=0;i<data_size;i++){ //每個點稀疏的實驗資料產生 data_size筆
             bitmap[i]=make_bitmap(bit_density);
@@ -101,12 +95,13 @@ int main(int argc, char *argv[]){
         clock_gettime(CLOCK_MONOTONIC, &t2);
         improved(bitmap, data_size, out);//真正跑分析的函式
         clock_gettime(CLOCK_MONOTONIC, &t3);
-        total_nai += (unsigned long long) (t2.tv_sec * 1e9 + t2.tv_nsec) -
-                     (t1.tv_sec * 1e9 + t1.tv_nsec);
-        total_imp += (unsigned long long) (t3.tv_sec * 1e9 + t3.tv_nsec) -
-                     (t2.tv_sec * 1e9 + t2.tv_nsec);
-        fprintf(txt,"bit_density=%u,%llu,%llu\n", bit_density, total_nai, total_imp);  
-        //printf("bit_density=%d,%llu,%llu\n", bit_density, total_nai, total_imp);         
+        time_naive += (unsigned long long) (t2.tv_sec * 1000000000 + t2.tv_nsec) -
+                     (t1.tv_sec * 1000000000 + t1.tv_nsec);//轉成 nanosecond
+        time_improved += (unsigned long long) (t3.tv_sec * 1000000000 + t3.tv_nsec) -
+                     (t2.tv_sec * 1000000000 + t2.tv_nsec);//轉成 nanosecond
+        //fprintf(txt,"bit_density=%u,%llu,%llu\n", bit_density, time_naive, time_improved);
+        fprintf(txt,"%u,%llu,%llu\n", bit_density, time_naive, time_improved);  
+        //printf("bit_density=%d,%llu,%llu\n", bit_density, time_naive, time_improved);         
     }
     free(bitmap);
     free(out);
