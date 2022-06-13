@@ -11,7 +11,7 @@ To build this project code
 ```
 /* compile and build code */
 /* if you want to run code */
-/*Ex test bitmap 10000 data,type*/
+/*Ex test bitmap 10000 data,please type*/
 /*./main 10000 */
 $ make
 
@@ -19,6 +19,6 @@ $ make
 /*and make gnuplot png automatically*/
 $ make plot 
 
-/*remove ./main.out, data.csv and gunplot png*/
+/*remove ./main.out, data.csv and gnuplot png*/
 $ make clean
 ```
