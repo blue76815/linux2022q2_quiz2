@@ -53,7 +53,7 @@ uint64_t make_bitmap(int set_bit_num){
         while(i==rand_i)
             rand_i=rand() % 64;
 
-        swap(&array[i], &array[rand_i]);
+        //swap(&array[i], &array[rand_i]);
     }
     for (int i = 0; i < 64; i++){
         bitmap^= array[i]<<(63-i) ;//轉換成 Big-Endian
