@@ -19,6 +19,6 @@ $ make
 /*and make gnuplot png automatically*/
 $ make plot 
 
-/*remove data.csv and gunplot png*/
+/*remove ./main.out, data.csv and gunplot png*/
 $ make clean
 ```
